@@ -175,6 +175,7 @@ export default function AdinkraHero() {
 
     function step(now: number) {
       if (!start) start = now;
+      if (!cvA || !cvB) return;
       const raw = Math.min((now - start) / FADE_MS, 1);
       cvA.style.opacity = String(1 - ease(raw));
       if (raw < 1) {
