@@ -189,7 +189,7 @@ export default function BlogPage() {
       </div>
 
       {/* ── EDITORIAL STATEMENT ──────────────────────── */}
-      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "sticky", top: 0, zIndex: 2, position: "relative", overflow: "clip" }}>
+      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "sticky", top: 0, zIndex: 2, overflow: "clip" }}>
         <Watermark
           src="/symbols/nea-onnim.png"
           style={{ right: "-4%", top: "5%", width: "35%", opacity: 0.04 }}
