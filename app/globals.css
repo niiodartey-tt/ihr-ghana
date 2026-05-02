@@ -1,26 +1,102 @@
-@import "tailwindcss";
+@font-face {
+  font-family: 'Sofia Pro';
+  src: url('/fonts/SofiaProRegular-english.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-sofia: 'Sofia Pro', Helvetica, Arial, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #FDFAF5;
+    color: #1A1410;
+    font-family: var(--font-sofia);
+    font-weight: 400;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sofia);
+    font-weight: 400;
+    line-height: 1.05;
+    color: #1A1410;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sofia);
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #D4A843;
+  }
+
+  .btn-primary {
+    background-color: #1A1410;
+    color: #FDFAF5;
+    font-family: var(--font-sofia);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: #D4A843;
+    color: #1A1410;
+  }
+
+  .btn-ghost {
+    border: 1px solid #1A1410;
+    color: #1A1410;
+    font-family: var(--font-sofia);
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.9rem 2.2rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover {
+    border-color: #D4A843;
+    color: #D4A843;
+  }
+
+  .section-divider {
+    width: 48px;
+    height: 2px;
+    background-color: #D4A843;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
