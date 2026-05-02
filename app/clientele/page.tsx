@@ -7,26 +7,21 @@ import Footer from "@/components/layout/Footer";
 const EASE = [0.76, 0, 0.24, 1] as const;
 
 function Reveal({
-  children, delay = 0, direction = "up",
+  children, delay = 0,
 }: {
   children: React.ReactNode; delay?: number; direction?: "up" | "left" | "right";
 }) {
-  const initial =
-    direction === "left"  ? { opacity: 0, x: -48 } :
-    direction === "right" ? { opacity: 0, x:  48 } :
-                            { opacity: 0, y:  48 };
   return (
     <motion.div
-      initial={initial}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-80px", amount: 0.1 }}
-      transition={{ duration: 0.9, ease: EASE, delay }}
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0 }}
+      transition={{ duration: 0.8, ease: EASE, delay }}
     >
       {children}
     </motion.div>
   );
 }
-
 function Watermark({ src, style }: { src: string; style: React.CSSProperties }) {
   return (
     <div style={{ position: "absolute", pointerEvents: "none", userSelect: "none", ...style }}>
@@ -38,7 +33,6 @@ function Watermark({ src, style }: { src: string; style: React.CSSProperties }) 
 const PAT = ["a","c","b","d","a","c","b","d","c","b","d","a","c","b","d","a","b","d","a","c","b","d","a","c","d","a","c","b","d","a","c","b","a","c","b","d","a","c","b","d"];
 const COLORS: Record<string, string> = { a: "#C8651A", b: "#A83E10", c: "#3A7D6E", d: "#2D6459" };
 
-// ── All client logos ──────────────────────────────────────
 const LOGOS = [
   { src: "/images/clients/access-lg-logo.png",       alt: "Access Bank" },
   { src: "/images/clients/cocoa-abrabopa-logo.png",   alt: "Cocoa Abrabopa" },
@@ -70,24 +64,66 @@ const LOGOS = [
   { src: "/images/clients/petra_logo.png",            alt: "Petra" },
 ];
 
-// Split into two rows
 const ROW_1 = LOGOS.slice(0, 14);
 const ROW_2 = LOGOS.slice(14);
 
 const INDUSTRIES = [
-  { name: "Financial Services",      desc: "Banks, insurance companies, asset managers and investment firms." },
-  { name: "Telecommunications",      desc: "Mobile network operators and technology service providers." },
-  { name: "Healthcare & Pharma",     desc: "Hospitals, pharmaceutical companies and health-focused NGOs." },
-  { name: "Manufacturing",           desc: "Industrial manufacturers and production companies." },
-  { name: "Energy & Resources",      desc: "Oil and gas, mining and energy infrastructure organisations." },
-  { name: "Agriculture",             desc: "Agribusiness, farming cooperatives and agricultural development." },
-  { name: "Public Sector & NGOs",    desc: "Government agencies, development organisations and civil society." },
-  { name: "Professional Services",   desc: "Law firms, consulting practices and advisory businesses." },
-  { name: "Trade & Distribution",    desc: "Import/export, logistics and distribution companies." },
-  { name: "Education",               desc: "Universities, schools and learning institutions." },
-  { name: "Technology",              desc: "Software, fintech and digital services companies." },
-  { name: "Transport & Logistics",   desc: "Fleet operators, freight forwarders and transport businesses." },
+  { name: "Financial Services",    desc: "Banks, insurance companies, asset managers and investment firms." },
+  { name: "Telecommunications",    desc: "Mobile network operators and technology service providers." },
+  { name: "Healthcare & Pharma",   desc: "Hospitals, pharmaceutical companies and health-focused NGOs." },
+  { name: "Manufacturing",         desc: "Industrial manufacturers and production companies." },
+  { name: "Energy & Resources",    desc: "Oil and gas, mining and energy infrastructure organisations." },
+  { name: "Agriculture",           desc: "Agribusiness, farming cooperatives and agricultural development." },
+  { name: "Public Sector & NGOs",  desc: "Government agencies, development organisations and civil society." },
+  { name: "Professional Services", desc: "Law firms, consulting practices and advisory businesses." },
+  { name: "Trade & Distribution",  desc: "Import/export, logistics and distribution companies." },
+  { name: "Education",             desc: "Universities, schools and learning institutions." },
+  { name: "Technology",            desc: "Software, fintech and digital services companies." },
+  { name: "Transport & Logistics", desc: "Fleet operators, freight forwarders and transport businesses." },
 ];
+
+// ── Reusable logo item ────────────────────────────────────
+function LogoItem({ logo }: { logo: typeof LOGOS[0] }) {
+  return (
+    <div style={{
+      width:           "160px",
+      height:          "80px",
+      flexShrink:      0,
+      display:         "flex",
+      alignItems:      "center",
+      justifyContent:  "center",
+      background:      "rgba(255,255,255,0.08)",
+      padding:         "12px 16px",
+      transition:      "background 0.4s ease",
+    }}
+      onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.18)"; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.08)"; }}
+    >
+      <img
+        src={logo.src}
+        alt={logo.alt}
+        style={{
+          width:      "100%",
+          height:     "100%",
+          objectFit:  "contain",
+          filter:     "grayscale(1)",
+          opacity:    0.6,
+          transition: "opacity 0.4s ease, filter 0.4s ease",
+        }}
+        onMouseEnter={e => {
+          const el = e.currentTarget as HTMLImageElement;
+          el.style.filter  = "grayscale(0)";
+          el.style.opacity = "1";
+        }}
+        onMouseLeave={e => {
+          const el = e.currentTarget as HTMLImageElement;
+          el.style.filter  = "grayscale(1)";
+          el.style.opacity = "0.6";
+        }}
+      />
+    </div>
+  );
+}
 
 export default function ClientelePage() {
   const bannerRef = useRef<HTMLDivElement>(null);
@@ -142,28 +178,27 @@ export default function ClientelePage() {
 
       {/* ── OPENING STATEMENT ────────────────────────── */}
       <section style={{ background: "#FDFAF5", padding: "6rem 4rem", position: "relative", overflow: "clip" }}>
-        <Watermark
-          src="/symbols/nea-onnim.png"
-          style={{ right: "-4%", bottom: "-5%", width: "35%", opacity: 0.04 }}
-        />
+        <Watermark src="/symbols/nea-onnim.png" style={{ right: "-4%", bottom: "-5%", width: "35%", opacity: 0.04 }} />
         <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative" }}>
+
+          {/* — not wrapped in Reveal so it shows immediately — */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "start" }}>
-            <Reveal direction="left">
+            <div>
               <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.7rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}>
                 Our Clients
               </p>
               <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2rem, 3.5vw, 3rem)", fontWeight: 700, color: "#1A1410", lineHeight: 1.05 }}>
                 Over 200 organisations across Ghana and West Africa.
               </h2>
-            </Reveal>
-            <Reveal direction="right" delay={0.1}>
+            </div>
+            <div>
               <p style={{ fontSize: "0.95rem", lineHeight: 1.85, color: "rgba(26,20,16,0.65)", marginBottom: "1.2rem" }}>
                 Our clients range from Ghanaian SMEs taking their first steps toward building professional people management systems, to large multinational corporations operating across multiple African markets. What they share is not size or sector — it is the conviction that their people are worth investing in properly.
               </p>
               <p style={{ fontSize: "0.95rem", lineHeight: 1.85, color: "rgba(26,20,16,0.65)" }}>
                 We have worked across financial services, telecommunications, healthcare, manufacturing, energy, agriculture, the public sector, and beyond. In every engagement, we bring the same commitment — bespoke solutions, honest counsel, and genuine investment in your outcomes.
               </p>
-            </Reveal>
+            </div>
           </div>
 
           {/* Stats */}
@@ -187,112 +222,29 @@ export default function ClientelePage() {
 
       {/* ── LOGO MARQUEE ─────────────────────────────── */}
       <section style={{ background: "#1A1410", padding: "5rem 0", overflow: "hidden", position: "relative" }}>
-        <Watermark
-          src="/symbols/adinkrahene.png"
-          style={{ right: "-3%", top: "50%", width: "25%", opacity: 0.05, transform: "translateY(-50%)" }}
-        />
-
         <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 4rem", marginBottom: "3rem" }}>
-          <Reveal>
-            <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.7rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.5rem", fontWeight: 500 }}>
-              Trusted By
-            </p>
-            <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.05 }}>
-              A selection of our clients.
-            </h2>
-          </Reveal>
+          <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.7rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.5rem", fontWeight: 500 }}>
+            Trusted By
+          </p>
+          <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(1.8rem, 3vw, 2.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.05 }}>
+            A selection of our clients.
+          </h2>
         </div>
 
         {/* Row 1 — scrolls left */}
         <div style={{ overflow: "hidden", marginBottom: "1.5rem" }}>
-          <div style={{
-            display:   "flex",
-            gap:       "3rem",
-            animation: "marquee-left 35s linear infinite",
-            width:     "max-content",
-          }}>
+          <div style={{ display: "flex", gap: "1.5rem", animation: "marquee-left 35s linear infinite", width: "max-content" }}>
             {[...ROW_1, ...ROW_1, ...ROW_1].map((logo, i) => (
-              <div
-                key={i}
-                style={{
-                  width:          "140px",
-                  height:         "70px",
-                  display:        "flex",
-                  alignItems:     "center",
-                  justifyContent: "center",
-                  flexShrink:     0,
-                }}
-              >
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  style={{
-                    maxWidth:   "120px",
-                    maxHeight:  "55px",
-                    objectFit:  "contain",
-                    filter:     "grayscale(1) brightness(10) invert(0)",
-                    opacity:    0.45,
-                    transition: "opacity 0.4s ease, filter 0.4s ease",
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLImageElement;
-                    el.style.filter  = "grayscale(0) brightness(1) invert(0)";
-                    el.style.opacity = "1";
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLImageElement;
-                    el.style.filter  = "grayscale(1) brightness(10) invert(0)";
-                    el.style.opacity = "0.45";
-                  }}
-                />
-              </div>
+              <LogoItem key={i} logo={logo} />
             ))}
           </div>
         </div>
 
         {/* Row 2 — scrolls right */}
         <div style={{ overflow: "hidden" }}>
-          <div style={{
-            display:   "flex",
-            gap:       "3rem",
-            animation: "marquee-right 40s linear infinite",
-            width:     "max-content",
-          }}>
+          <div style={{ display: "flex", gap: "1.5rem", animation: "marquee-right 40s linear infinite", width: "max-content" }}>
             {[...ROW_2, ...ROW_2, ...ROW_2].map((logo, i) => (
-              <div
-                key={i}
-                style={{
-                  width:          "140px",
-                  height:         "70px",
-                  display:        "flex",
-                  alignItems:     "center",
-                  justifyContent: "center",
-                  flexShrink:     0,
-                }}
-              >
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  style={{
-                    maxWidth:   "120px",
-                    maxHeight:  "55px",
-                    objectFit:  "contain",
-                    filter:     "grayscale(1) brightness(10) invert(0)",
-                    opacity:    0.45,
-                    transition: "opacity 0.4s ease, filter 0.4s ease",
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLImageElement;
-                    el.style.filter  = "grayscale(0) brightness(1) invert(0)";
-                    el.style.opacity = "1";
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLImageElement;
-                    el.style.filter  = "grayscale(1) brightness(10) invert(0)";
-                    el.style.opacity = "0.45";
-                  }}
-                />
-              </div>
+              <LogoItem key={i} logo={logo} />
             ))}
           </div>
         </div>
@@ -311,10 +263,7 @@ export default function ClientelePage() {
 
       {/* ── INDUSTRIES ───────────────────────────────── */}
       <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
-        <Watermark
-          src="/symbols/agyindawuru.png"
-          style={{ left: "-4%", bottom: "-5%", width: "32%", opacity: 0.05 }}
-        />
+        <Watermark src="/symbols/agyindawuru.png" style={{ left: "-4%", bottom: "-5%", width: "32%", opacity: 0.05 }} />
         <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative" }}>
           <Reveal>
             <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.7rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}>
@@ -352,10 +301,7 @@ export default function ClientelePage() {
 
       {/* ── TESTIMONIALS PLACEHOLDER ──────────────────── */}
       <section style={{ background: "#1A3330", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
-        <Watermark
-          src="/symbols/adinkrahene.png"
-          style={{ right: "-4%", bottom: "-5%", width: "36%", opacity: 0.06 }}
-        />
+        <Watermark src="/symbols/adinkrahene.png" style={{ right: "-4%", bottom: "-5%", width: "36%", opacity: 0.06 }} />
         <div style={{ maxWidth: "1100px", margin: "0 auto", position: "relative" }}>
           <Reveal>
             <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.7rem", letterSpacing: "0.32em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}>
@@ -370,18 +316,12 @@ export default function ClientelePage() {
             {[1, 2, 3].map(i => (
               <Reveal key={i} delay={i * 0.1}>
                 <div style={{
-                  padding:     "3rem",
-                  borderTop:   "2px solid rgba(200,101,26,0.3)",
-                  background:  "rgba(245,237,216,0.03)",
-                  minHeight:   "280px",
-                  display:     "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
+                  padding: "3rem", borderTop: "2px solid rgba(200,101,26,0.3)",
+                  background: "rgba(245,237,216,0.03)", minHeight: "280px",
+                  display: "flex", flexDirection: "column", justifyContent: "space-between",
                 }}>
                   <div>
-                    <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", color: "#C8651A", lineHeight: 1, marginBottom: "1.5rem", opacity: 0.5 }}>
-                      "
-                    </p>
+                    <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", color: "#C8651A", lineHeight: 1, marginBottom: "1.5rem", opacity: 0.5 }}>"</p>
                     <p style={{ fontFamily: "var(--font-cormorant)", fontStyle: "italic", fontSize: "1.05rem", color: "rgba(245,237,216,0.35)", lineHeight: 1.7 }}>
                       Client testimonial coming soon.
                     </p>
