@@ -38,18 +38,16 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className="bg-cream text-dark font-body antialiased">
-        <div className="flex min-h-screen">
+        <div className="flex">
           {/* Left Sidebar */}
           <Sidebar />
 
           {/* Main content — offset by sidebar width */}
-          <div className="flex-1 lg:ml-[300px] flex flex-col min-h-screen">
+          <main className="flex-1 lg:ml-[300px]">
             <PageTransition>
-              <main className="flex-1">
-                {children}
-              </main>
+              {children}
             </PageTransition>
-          </div>
+          </main>
         </div>
       </body>
     </html>

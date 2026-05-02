@@ -11,23 +11,21 @@ export default function PageTransition({
 }) {
   const pathname = usePathname();
 
-  // Scroll to top on route change — smoothly
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [pathname]);
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
-        initial={{ y: "100%", opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: "-4%", opacity: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{
-          duration: 0.75,
+          duration: 0.5,
           ease: [0.76, 0, 0.24, 1],
         }}
-        style={{ minHeight: "100vh" }}
       >
         {children}
       </motion.div>

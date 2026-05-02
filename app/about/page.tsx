@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Footer from "@/components/layout/Footer";
 
@@ -121,13 +121,9 @@ const COLORS: Record<string, string> = {
 // ── Banner with internal parallax ───────────────────────
 function HeroBanner() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target:  ref,
-    offset:  ["start start", "end start"],
-  });
-  const y       = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
+  const { scrollY } = useScroll();
+  const y       = useTransform(scrollY, [0, 600], [0, 180]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   return (
     <div
       ref={ref}
@@ -204,22 +200,50 @@ function HeroBanner() {
 
 // ── Parallax image in section ────────────────────────────
 function ParallaxWatermark({
-  src, style,
+  src,
+  style,
+  speed = 60,
 }: {
   src: string;
   style: React.CSSProperties;
+  speed?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target:  ref,
-    offset:  ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const { scrollY } = useScroll();
+  const [top, setTop] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const update = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        setTop(rect.top + window.scrollY);
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const y = useTransform(
+    scrollY,
+    [top - 800, top + 800],
+    [-speed, speed]
+  );
+
+  if (!mounted) return null;
 
   return (
     <motion.div
       ref={ref}
-      style={{ position: "absolute", pointerEvents: "none", userSelect: "none", ...style, y }}
+      style={{
+        position:      "absolute",
+        pointerEvents: "none",
+        userSelect:    "none",
+        ...style,
+        y,
+      }}
     >
       <img src={src} alt="" aria-hidden="true" style={{ width: "100%", display: "block" }} />
     </motion.div>
@@ -237,7 +261,7 @@ export default function AboutPage() {
       <section style={{
         background: "#FDFAF5", minHeight: "100vh",
         display: "flex", alignItems: "center",
-        padding: "7rem 4rem", position: "relative", overflow: "hidden",
+        padding: "7rem 4rem", position: "relative", overflow: "clip",
       }}>
         <ParallaxWatermark
           src="/symbols/adinkrahene.png"
@@ -330,11 +354,11 @@ export default function AboutPage() {
       <section style={{
         background: "#1A1410", minHeight: "100vh",
         display: "flex", alignItems: "center",
-        padding: "7rem 4rem", position: "relative", overflow: "hidden",
+        padding: "7rem 4rem", position: "relative", overflow: "clip",
       }}>
         <ParallaxWatermark
           src="/symbols/agyindawuru.png"
-          style={{ left: "-4%", top: "50%", width: "30%", opacity: 0.055, transform: "translateY(-50%)" }}
+          style={{ left: "-4%", top: "20%", width: "30%", opacity: 0.055 }}
         />
 
         <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%", position: "relative" }}>
@@ -393,7 +417,7 @@ export default function AboutPage() {
       <section style={{
         background: "#C8651A", minHeight: "100vh",
         display: "flex", alignItems: "center",
-        padding: "7rem 4rem", position: "relative", overflow: "hidden",
+        padding: "7rem 4rem", position: "relative", overflow: "clip",
       }}>
         <ParallaxWatermark
           src="/symbols/nea-onnim.png"
@@ -469,7 +493,7 @@ export default function AboutPage() {
       <section style={{
         background: "#FDFAF5", minHeight: "100vh",
         display: "flex", alignItems: "center",
-        padding: "7rem 4rem", position: "relative", overflow: "hidden",
+        padding: "7rem 4rem", position: "relative", overflow: "clip",
       }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%", position: "relative" }}>
 
@@ -498,7 +522,7 @@ export default function AboutPage() {
                     background: "linear-gradient(135deg, #E8D9BB 0%, #D4C4A0 100%)",
                     marginBottom: "1.2rem",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    position: "relative", overflow: "hidden",
+                    position: "relative", overflow: "clip",
                   }}>
                     <span style={{
                       fontFamily: "var(--font-cormorant)", fontSize: "4rem",
