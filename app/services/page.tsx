@@ -211,7 +211,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#1A3330", marginBottom: "0.8rem", fontWeight: 500 }}
           >
             What We Do
           </motion.p>
@@ -222,7 +222,7 @@ export default function ServicesPage() {
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.0, letterSpacing: "-0.01em" }}
           >
             People Solutions.<br />
-            <em style={{ color: "#C8651A" }}>Built to Last.</em>
+            <em style={{ color: "#1A3330" }}>Built to Last.</em>
           </motion.h1>
         </motion.div>
       </div>

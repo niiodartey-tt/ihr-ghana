@@ -172,7 +172,7 @@ export default function BlogPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#1A3330", marginBottom: "0.8rem", fontWeight: 500 }}
           >
             Insights
           </motion.p>
@@ -183,13 +183,13 @@ export default function BlogPage() {
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.0, letterSpacing: "-0.01em" }}
           >
             Ideas Worth<br />
-            <em style={{ color: "#C8651A" }}>Acting On.</em>
+            <em style={{ color: "#1A3330", fontStyle: "italic" }}>Acting On.</em>
           </motion.h1>
         </motion.div>
       </div>
 
       {/* ── EDITORIAL STATEMENT ──────────────────────── */}
-      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
+      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "sticky", top: 0, zIndex: 2, position: "relative", overflow: "clip" }}>
         <Watermark
           src="/symbols/nea-onnim.png"
           style={{ right: "-4%", top: "5%", width: "35%", opacity: 0.04 }}
@@ -257,7 +257,7 @@ export default function BlogPage() {
       </section>
 
       {/* ── CATEGORY TEASES ──────────────────────────── */}
-      <section style={{ background: "#1A1410", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
+      <section style={{ background: "#1A1410", padding: "7rem 4rem", position: "sticky", top: 0, zIndex: 3, overflow: "clip" }}>
         <Watermark
           src="/symbols/adinkrahene.png"
           style={{ left: "-4%", bottom: "-5%", width: "32%", opacity: 0.06 }}
@@ -315,7 +315,7 @@ export default function BlogPage() {
       </section>
 
       {/* ── IN THE MEANTIME ──────────────────────────── */}
-      <section style={{ background: "#FDFAF5", padding: "6rem 4rem" }}>
+      <section style={{ background: "#FDFAF5", padding: "6rem 4rem", position: "sticky", top: 0, zIndex: 4 }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "5rem", alignItems: "center" }}>
@@ -383,7 +383,9 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <Footer />
+      <div style={{ position: "relative", zIndex: 5 }}>
+        <Footer />
+      </div>
     </div>
   );
 }

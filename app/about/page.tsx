@@ -53,10 +53,22 @@ const APPROACH = [
 ];
 
 const TEAM = [
-  { name: "Team Member", role: "Managing Director",       initials: "MD" },
-  { name: "Team Member", role: "HR Advisory Lead",        initials: "HR" },
-  { name: "Team Member", role: "Business Advisory Lead",  initials: "BA" },
-  { name: "Team Member", role: "Talent Acquisition Lead", initials: "TA" },
+  {
+    name:     "Rosemary D.L. Amarh-Kwantreng",
+    role:     "Managing / Principal Consultant",
+    initials: "RA",
+    email:    "Rosemary@ihrgh.com",
+    photo:    "/images/team/logo-founder.jpeg",
+    bio:      "A versatile human resource professional with over 19 years of experience spanning the full HR spectrum. Rosemary has expertise in Performance Management, Change Management, Executive Search, Reward Management, Organisation & People Development and Leadership & Management Development. Prior to founding IHR, she served as Head of HR and Administration at Atlas Copco Ghana Ltd and as a Senior Management Consultant at KPMG. She holds an MBA in General Management, a Bachelor's Degree in Business Administration (HR Option) and is a member of CIHRM.",
+  },
+  {
+    name:     "Yoku Korsah",
+    role:     "Non-Executive Director",
+    initials: "YK",
+    email:    "",
+    photo:    "",
+    bio:      "A business strategy and digital development consultant specialising in performance management and market development strategies, with over 25 years of consulting and advisory experience. Yoku was Chief Operating Officer at Ghana Interbank Payments and Settlement Systems Limited (GhIPSS) for 5 years and previously managed JMR Infotech Ghana. He started his career at KPMG where he became a Partner and Head of the Advisory Practice in Ghana. He is a Fellow of the Chartered Institute of Management Accountants (FCMA, CGMA) and a certified Balanced Scorecard Practitioner.",
+  },
 ];
 
 const PAT = ["a","c","b","d","a","c","b","d","c","b","d","a","c","b","d","a","b","d","a","c","b","d","a","c","d","a","c","b","d","a","c","b","a","c","b","d","a","c","b","d"];
@@ -108,7 +120,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#1A3330", marginBottom: "0.8rem", fontWeight: 500 }}
           >
             Our Story
           </motion.p>
@@ -119,7 +131,7 @@ export default function AboutPage() {
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.0, letterSpacing: "-0.01em" }}
           >
             Rooted in Culture.<br />
-            <em style={{ color: "#C8651A" }}>Built for Results.</em>
+            <em style={{ color: "#1A3330" }}>Built for Results.</em>
           </motion.h1>
         </motion.div>
       </div>
@@ -288,6 +300,9 @@ export default function AboutPage() {
           padding: "7rem 4rem",
           position: "sticky", top: 0, zIndex: 5,
           overflow: "clip",
+          boxShadow: "0 -12px 48px rgba(0,0,0,0.2)",
+          transform: "translateZ(0)",
+          willChange: "transform",
         }}>
           <Watermark
             src="/symbols/adinkrahene.png"
@@ -297,22 +312,97 @@ export default function AboutPage() {
             <Reveal>
               <SectionLabel text="The People Behind IHR" />
               <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.2rem, 4vw, 3.8rem)", fontWeight: 700, color: "#1A1410", lineHeight: 1.05, marginBottom: "4rem" }}>
-                Our Team
+                Our Leadership
               </h2>
             </Reveal>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "3rem" }}>
               {TEAM.map((member, i) => (
-                <Reveal key={i} delay={i * 0.1}>
+                <Reveal key={i} delay={i * 0.15}>
                   <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.4, ease: EASE }}>
-                    <div style={{ width: "100%", aspectRatio: "3/4", background: "linear-gradient(135deg, #E8D9BB 0%, #D4C4A0 100%)", marginBottom: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
-                      <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "4rem", fontWeight: 300, color: "rgba(200,101,26,0.2)", userSelect: "none" }}>{member.initials}</span>
-                      <div style={{ position: "absolute", bottom: "1rem", left: "1rem", background: "rgba(26,20,16,0.55)", padding: "0.3rem 0.7rem", backdropFilter: "blur(4px)" }}>
-                        <p style={{ fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(245,237,216,0.7)" }}>Photo coming soon</p>
+                  {/* Photo */}
+                  <div style={{
+                    width:         "100%",
+                    paddingBottom: "120%",
+                    position:      "relative",
+                    marginBottom:  "1.5rem",
+                    overflow:      "hidden",
+                  }}>
+                    {member.photo ? (
+                      <div style={{
+                        position:           "absolute",
+                        inset:              0,
+                        backgroundImage:    `url(${member.photo})`,
+                        backgroundSize:     "cover",
+                        backgroundPosition: "center top",
+                        backgroundRepeat:   "no-repeat",
+                      }} />
+                    ) : (
+                      <div style={{
+                        position:       "absolute",
+                        inset:          0,
+                        background:     "linear-gradient(135deg, #E8D9BB 0%, #D4C4A0 100%)",
+                        display:        "flex",
+                        alignItems:     "center",
+                        justifyContent: "center",
+                      }}>
+                        <span style={{
+                          fontFamily: "var(--font-cormorant)", fontSize: "5rem",
+                          fontWeight: 300, color: "rgba(200,101,26,0.2)", userSelect: "none",
+                        }}>
+                          {member.initials}
+                        </span>
+                        <div style={{
+                          position:       "absolute",
+                          bottom:         "1rem",
+                          left:           "1rem",
+                          background:     "rgba(26,20,16,0.55)",
+                          padding:        "0.3rem 0.7rem",
+                          backdropFilter: "blur(4px)",
+                        }}>
+                          <p style={{
+                            fontSize: "0.58rem", letterSpacing: "0.2em",
+                            textTransform: "uppercase", color: "rgba(245,237,216,0.7)",
+                          }}>Photo coming soon</p>
+                        </div>
                       </div>
-                    </div>
-                    <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.2rem", fontWeight: 600, color: "#1A1410", marginBottom: "0.2rem" }}>{member.name}</p>
-                    <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#C8651A", fontWeight: 400 }}>{member.role}</p>
+                    )}
+                  </div>                    {/* Name & role */}
+                    <p style={{
+                      fontFamily: "var(--font-cormorant)", fontSize: "1.5rem",
+                      fontWeight: 700, color: "#1A1410", marginBottom: "0.2rem",
+                    }}>
+                      {member.name}
+                    </p>
+                    <p style={{
+                      fontSize: "0.72rem", letterSpacing: "0.12em",
+                      textTransform: "uppercase", color: "#C8651A",
+                      fontWeight: 400, marginBottom: "1rem",
+                    }}>
+                      {member.role}
+                    </p>
+
+                    {/* Bio */}
+                    <p style={{
+                      fontSize: "0.9rem", lineHeight: 1.8,
+                      color: "rgba(26,20,16,0.62)", marginBottom: "1rem",
+                    }}>
+                      {member.bio}
+                    </p>
+
+                    {/* Email */}
+                    {member.email && (
+                      <a
+                        href={`mailto:${member.email}`}
+                        style={{
+                          fontSize: "0.78rem", color: "#C8651A",
+                          textDecoration: "none", letterSpacing: "0.05em",
+                          borderBottom: "1px solid #C8651A", paddingBottom: "0.1rem",
+                        }}
+                      >
+                        {member.email}
+                      </a>
+                    )}
                   </motion.div>
                 </Reveal>
               ))}

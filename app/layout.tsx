@@ -3,6 +3,7 @@ import "./globals.css";
 import Sidebar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageTransition from "@/components/layout/PageTransition";
+import SmoothScroll from "@/components/layout/SmoothScroll";
 
 export const metadata: Metadata = {
   title: {
@@ -36,8 +37,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-scroll-behavior="smooth" style={{ scrollBehavior: "smooth" }}>
       <body className="bg-cream text-dark font-body antialiased">
+        <SmoothScroll>
         <div className="flex">
           {/* Left Sidebar */}
           <Sidebar />
@@ -49,6 +51,7 @@ export default function RootLayout({
             </PageTransition>
           </main>
         </div>
+        </SmoothScroll>
       </body>
     </html>
   );

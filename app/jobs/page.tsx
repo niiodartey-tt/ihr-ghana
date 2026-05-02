@@ -335,7 +335,7 @@ export default function JobsPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#1A3330", marginBottom: "0.8rem", fontWeight: 500 }}
           >
             Join Us
           </motion.p>
@@ -346,13 +346,13 @@ export default function JobsPage() {
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.0, letterSpacing: "-0.01em" }}
           >
             Build Something<br />
-            <em style={{ color: "#C8651A" }}>Worth Building.</em>
+            <em style={{ color: "#1A3330", fontStyle: "italic" }}>Worth Building.</em>
           </motion.h1>
         </motion.div>
       </div>
 
       {/* ── WORK AT IHR ──────────────────────────────── */}
-      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
+      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", position: "sticky", top: 0, zIndex: 2, overflow: "clip" }}>
         <Watermark
           src="/symbols/adinkrahene.png"
           style={{ right: "-4%", bottom: "-5%", width: "36%", opacity: 0.05 }}
@@ -423,7 +423,7 @@ export default function JobsPage() {
       </section>
 
       {/* ── CURRENT VACANCIES ────────────────────────── */}
-      <section style={{ background: "#1A1410", padding: "7rem 4rem", position: "relative", overflow: "clip" }}>
+      <section style={{ background: "#1A1410", padding: "7rem 4rem", position: "relative", zIndex: 3, overflow: "clip" }}>
         <Watermark
           src="/symbols/agyindawuru.png"
           style={{ left: "-3%", top: "10%", width: "28%", opacity: 0.07 }}
@@ -477,7 +477,9 @@ export default function JobsPage() {
         </div>
       </section>
 
-      <Footer />
+      <div style={{ position: "relative", zIndex: 4 }}>
+        <Footer />
+      </div>
     </div>
   );
 }

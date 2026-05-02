@@ -118,7 +118,7 @@ export default function AdinkraHero() {
     ctx.globalAlpha = alpha;
     ctx.drawImage(img, dx, dy, dw, dh);
     ctx.globalCompositeOperation = "source-in";
-    ctx.fillStyle = "#F5EDD8";
+    ctx.fillStyle = "#1A3330";
     ctx.fillRect(0, 0, W, H);
     ctx.restore();
   }
@@ -525,7 +525,7 @@ export default function AdinkraHero() {
                 fontFamily:   "var(--font-cormorant)",
                 fontSize:     "clamp(1.6rem, 2.5vw, 2.8rem)",
                 fontWeight:   700,
-                color:        "#F5EDD8",
+                color:        "#1A3330",
                 lineHeight:   1.0,
                 marginBottom: "0.6rem",
                 textShadow:   "0 2px 20px rgba(0,0,0,0.4)",

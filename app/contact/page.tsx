@@ -371,7 +371,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.2 }}
-            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#C8651A", marginBottom: "0.8rem", fontWeight: 500 }}
+            style={{ fontFamily: "var(--font-cormorant)", fontSize: "0.72rem", letterSpacing: "0.35em", textTransform: "uppercase", color: "#1A3330", marginBottom: "0.8rem", fontWeight: 500 }}
           >
             Let's Talk
           </motion.p>
@@ -382,13 +382,13 @@ export default function ContactPage() {
             style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(2.8rem, 6vw, 5.5rem)", fontWeight: 700, color: "#F5EDD8", lineHeight: 1.0, letterSpacing: "-0.01em" }}
           >
             Start a Conversation.<br />
-            <em style={{ color: "#C8651A" }}>We're Listening.</em>
+            <em style={{ color: "#1A3330", fontStyle: "italic" }}>We're Listening.</em>
           </motion.h1>
         </motion.div>
       </div>
 
       {/* ── MAIN CONTACT SECTION ─────────────────────── */}
-      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", minHeight: "80vh" }}>
+      <section style={{ background: "#FDFAF5", padding: "7rem 4rem", minHeight: "80vh", position: "sticky", top: 0, zIndex: 2 }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "7rem", alignItems: "start" }}>
 
@@ -480,7 +480,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── MAP / LOCATION BAND ──────────────────────── */}
-      <section style={{ background: "#1A1410", padding: "5rem 4rem" }}>
+      <section style={{ background: "#1A1410", padding: "5rem 4rem", position: "sticky", top: 0, zIndex: 3 }}>
         <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
           <Reveal>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
@@ -530,7 +530,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <Footer />
+      <div style={{ position: "relative", zIndex: 4 }}>
+        <Footer />
+      </div>
     </div>
   );
 }
