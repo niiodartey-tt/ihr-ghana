@@ -137,7 +137,7 @@ export default function AboutPage() {
         }}>
           <Watermark
             src="/symbols/adinkrahene.png"
-            style={{ right: "-5%", bottom: "-8%", width: "40%", opacity: 0.04, filter: "invert(1)" }}
+            style={{ right: "-5%", bottom: "-8%", width: "40%", opacity: 0.06 }}
           />
           <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%", position: "relative" }}>
 
@@ -206,7 +206,7 @@ export default function AboutPage() {
         }}>
           <Watermark
             src="/symbols/agyindawuru.png"
-            style={{ left: "-4%", top: "20%", width: "30%", opacity: 0.055 }}
+            style={{ left: "-4%", top: "20%", width: "30%", opacity: 0.12 }}
           />
           <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%", position: "relative" }}>
             <Reveal>
@@ -289,6 +289,10 @@ export default function AboutPage() {
           position: "sticky", top: 0, zIndex: 5,
           overflow: "clip",
         }}>
+          <Watermark
+            src="/symbols/adinkrahene.png"
+            style={{ left: "-5%", bottom: "-5%", width: "38%", opacity: 0.05 }}
+          />
           <div style={{ maxWidth: "1100px", margin: "0 auto", width: "100%", position: "relative" }}>
             <Reveal>
               <SectionLabel text="The People Behind IHR" />
