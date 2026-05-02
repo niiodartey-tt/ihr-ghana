@@ -65,21 +65,30 @@ const SOCIAL_LINKS = [
   },
 ];
 
-export default function Sidebar() {
-  const [mobileOpen, setMobileOpen]       = useState(false);
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
-  const [hoveredLink, setHoveredLink]     = useState<string | null>(null);
-  const pathname = usePathname();
+// ── Extracted as a proper top-level component so state changes
+//    don't cause remount and destroy CSS transitions ──
+interface SidebarContentProps {
+  pathname:       string;
+  hoveredLink:    string | null;
+  hoveredSocial:  string | null;
+  setHoveredLink: (href: string | null) => void;
+  setHoveredSocial: (label: string | null) => void;
+  onLinkClick:    () => void;
+}
 
-  const SidebarContent = () => (
+function SidebarContent({
+  pathname,
+  hoveredLink,
+  hoveredSocial,
+  setHoveredLink,
+  setHoveredSocial,
+  onLinkClick,
+}: SidebarContentProps) {
+  return (
     <div className="flex flex-col h-full px-8 py-10">
 
-      {/* Logo — top */}
-      <Link
-        href="/"
-        onClick={() => setMobileOpen(false)}
-        className="block"
-      >
+      {/* Logo */}
+      <Link href="/" onClick={onLinkClick} className="block">
         <img
           src="/images/ihr-logo.png"
           alt="IHR Ghana"
@@ -88,10 +97,10 @@ export default function Sidebar() {
         />
       </Link>
 
-      {/* Spacer — pushes nav to bottom */}
+      {/* Spacer */}
       <div className="flex-1" />
 
-      {/* Nav Links — bottom aligned */}
+      {/* Nav Links */}
       <nav className="mb-10">
         <ul className="flex flex-col">
           {NAV_LINKS.map((link) => (
@@ -102,9 +111,9 @@ export default function Sidebar() {
             >
               <Link
                 href={link.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={onLinkClick}
                 className={cn(
-                  "block py-2.5 transition-all duration-500 ease-in-out",
+                  "block py-2.5",
                   pathname === link.href ? "pl-1" : "hover:pl-1"
                 )}
                 style={{
@@ -122,7 +131,7 @@ export default function Sidebar() {
                 {link.label}
               </Link>
 
-              {/* Animated amber underline — GPU accelerated */}
+              {/* Animated amber underline — GPU accelerated via scaleX */}
               <div
                 style={{
                   height:          "2px",
@@ -136,11 +145,8 @@ export default function Sidebar() {
                   opacity:         hoveredLink === link.href || pathname === link.href
                     ? 1
                     : 0.2,
-                  transition:      [
-                    "transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)",
-                    "opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1)",
-                  ].join(", "),
                   willChange:      "transform, opacity",
+                  transition:      "transform 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.6s cubic-bezier(0.76, 0, 0.24, 1)",
                 }}
               />
             </li>
@@ -148,11 +154,8 @@ export default function Sidebar() {
         </ul>
       </nav>
 
-      {/* Social Icons — very bottom */}
-      <div
-        className="pt-6"
-        style={{ borderTop: "1px solid rgba(0,0,0,0.1)" }}
-      >
+      {/* Social Icons */}
+      <div className="pt-6" style={{ borderTop: "1px solid rgba(0,0,0,0.1)" }}>
         <p
           className="text-[0.62rem] tracking-[0.25em] uppercase mb-4 font-medium"
           style={{ color: "rgba(0,0,0,0.89)" }}
@@ -173,7 +176,7 @@ export default function Sidebar() {
                 color:      hoveredSocial === social.label
                   ? social.hoverColor
                   : "rgba(0,0,0,0.89)",
-                transition: "color 0.4s ease",
+                transition: "color 0.4s cubic-bezier(0.76, 0, 0.24, 1)",
               }}
             >
               {social.icon}
@@ -183,6 +186,22 @@ export default function Sidebar() {
       </div>
     </div>
   );
+}
+
+export default function Sidebar() {
+  const [mobileOpen, setMobileOpen]         = useState(false);
+  const [hoveredSocial, setHoveredSocial]   = useState<string | null>(null);
+  const [hoveredLink, setHoveredLink]       = useState<string | null>(null);
+  const pathname = usePathname();
+
+  const sharedProps = {
+    pathname,
+    hoveredLink,
+    hoveredSocial,
+    setHoveredLink,
+    setHoveredSocial,
+    onLinkClick: () => setMobileOpen(false),
+  };
 
   return (
     <>
@@ -194,7 +213,7 @@ export default function Sidebar() {
           borderRight: "1px solid rgba(0,0,0,0.08)",
         }}
       >
-        <SidebarContent />
+        <SidebarContent {...sharedProps} />
       </aside>
 
       {/* Mobile hamburger */}
@@ -234,7 +253,7 @@ export default function Sidebar() {
         )}
         style={{ background: "#F5EDD8" }}
       >
-        <SidebarContent />
+        <SidebarContent {...sharedProps} />
       </aside>
     </>
   );
