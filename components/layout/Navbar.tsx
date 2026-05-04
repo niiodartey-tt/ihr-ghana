@@ -93,7 +93,7 @@ function SidebarContent({
           src="/images/ihr-logo.png"
           alt="IHR Ghana"
           className="w-full object-contain"
-          style={{ maxHeight: "120px" }}
+          style={{ maxHeight: "200px" }}
         />
       </Link>
 
